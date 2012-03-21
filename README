@@ -1,0 +1,60 @@
+
+sa-rdf-giraph README: 
+
+This project contains code which uses Apache Giraph to load an RDF graph from an adjacency CSV file. 
+
+The code works if you run the SimpleRDFVertexTest.java, however it does not run when submitting the job to Hadoop. 
+
+These are the commands which I used for submitting the job to hadoop: 
+
+In the directory of this project: mvn clean assembly:assembly
+
+In HADOOP_HOME: bin/hadoop jar ../sa-rdf-giraph-0.0.1-SNAPSHOT-job.jar ie.deri.uimr.rdfvertex.LoadRDFAdjacencyCSVAndHalt input output 3
+
+The error which hadoop provides: 
+
+12/03/21 20:10:41 INFO mapred.JobClient: Task Id : attempt_201203161335_0015_m_000000_2, Status : FAILED
+java.lang.IllegalStateException: run: Caught an unrecoverable exception onlineZooKeeperServers: Failed to connect in 10 tries!
+	at org.apache.giraph.graph.GraphMapper.run(GraphMapper.java:641)
+	at org.apache.hadoop.mapred.MapTask.runNewMapper(MapTask.java:764)
+	at org.apache.hadoop.mapred.MapTask.run(MapTask.java:370)
+	at org.apache.hadoop.mapred.Child$4.run(Child.java:255)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at javax.security.auth.Subject.doAs(Subject.java:396)
+	at org.apache.hadoop.security.UserGroupInformation.doAs(UserGroupInformation.java:1093)
+	at org.apache.hadoop.mapred.Child.main(Child.java:249)
+Caused by: java.lang.IllegalStateException: onlineZooKeeperServers: Failed to connect in 10 tries!
+	at org.apache.giraph.zk.ZooKeeperManager.onlineZooKeeperServers(ZooKeeperManager.java:658)
+	at org.apache.giraph.graph.GraphMapper.setup(GraphMapper.java:409)
+	at org.apache.giraph.graph.GraphMapper.run(GraphMapper.java:630)
+	... 7 more
+
+
+And here for completeness sake the licence for the code: 
+
+/*
+* Copyright ©2010-2012, Digital Enterprise Research Institute (DERI), NUI Galway, http://www.deri.ie
+* All rights reserved.
+*
+* Redistribution and use in source and binary forms, with or without
+* modification, are permitted provided that the following conditions are met:
+*     * Redistributions of source code must retain the above copyright
+*       notice, this list of conditions and the following disclaimer.
+*     * Redistributions in binary form must reproduce the above copyright
+*       notice, this list of conditions and the following disclaimer in the
+*       documentation and/or other materials provided with the distribution.
+*     * Neither the name of DERI nor the names of its contributors may be
+*       used to endorse or promote products derived from this software without
+*       specific prior written permission.
+*
+* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+* ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+* WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+* DISCLAIMED. IN NO EVENT SHALL DERI BE LIABLE FOR ANY
+* DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+* (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+* LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+* ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+* (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+* SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*/ 
